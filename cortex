@@ -486,7 +486,10 @@ class Entry(object):
         """Get the comment uri associated with this entry."""
         if "id" not in self.data:
             return ""
-        return (SUB_URI % self.data["subreddit"])+"/comments/"+self.data["id"]
+        uri = (SUB_URI % self.data["subreddit"])
+        if uri[-1] != "/":
+            uri += "/"
+        return uri+"comments/"+self.data["id"]
 
     def open(self):
         """Open entry link in browser."""
