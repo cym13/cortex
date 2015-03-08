@@ -283,6 +283,8 @@ def browseropen(uri):
             # Taken from webbrowser source since stderr is displayed using regular browser
             browser = webbrowser.get()
             if hasattr(browser, 'name'):
+                if "$" in uri:
+                    uri = uri.replace("$", "\$")
                 cmdline = browser.name + " " + uri
                 call( cmdline, shell=True, stdout=DEVNULL, stderr=DEVNULL)
             else:
