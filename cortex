@@ -371,21 +371,25 @@ class Data(object):
             return
 
         for datum in data:
-            datum = datum["data"]
-            if datum["hidden"]: continue
-            index = [entry for entry in self.entries if entry.data["id"] == datum["id"]]
+            try:
+                datum = datum["data"]
+                if datum["hidden"]: continue
+                index = [entry for entry in self.entries if entry.data["id"] == datum["id"]]
 
-            if index:
-                entry = index[0]
-                entry.data["num_comments"] = datum["num_comments"]
-                entry.data["score"] = datum["score"]
-                entry.data["ups"] = datum["ups"]
-                entry.data["downs"] = datum["downs"]
-            else:
-                self.entries.append(Entry(datum))
+                if index:
+                    entry = index[0]
+                    entry.data["num_comments"] = datum["num_comments"]
+                    entry.data["score"] = datum["score"]
+                    entry.data["ups"] = datum["ups"]
+                    entry.data["downs"] = datum["downs"]
+                else:
+                    self.entries.append(Entry(datum))
 
-            if datum["id"] not in Seen:
-                Seen.append(datum["id"])
+                if datum["id"] not in Seen:
+                    Seen.append(datum["id"])
+
+            except KeyError:
+                continue
 
         seen_write()
 
