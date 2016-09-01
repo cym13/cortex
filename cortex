@@ -264,7 +264,7 @@ def getcommand(name, cmds=None):
 
 # {{{ browseropen
 def quoteurl(uri):
-    return urllib.parse.quote(uri, safe="/:")
+    return uri.replace("'", "%27")
 
 def browseropen(uri):
     """Open a link in the browser."""
